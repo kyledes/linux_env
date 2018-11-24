@@ -1,0 +1,23 @@
+
+- name: install vim
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - vim
+
+- name: place config
+- template:
+  src: vimrc.j2
+  dest: "/home/{{target_user}}/.vimrc"
+  owner: "{{taget_user}}"
+  group: "{{target_user}}"
+  mode: 0644
+
+- name: install vundle
+- git:
+  repo: 'https://github.com/VundleVim/Vundle.vim.git '
+  dest: "/home/{{target_user}}/.vim/bundle/Vundle.vim"
+
+- name: install plugins
+- shell: "vim +PluginInstall +qall"

@@ -1,0 +1,37 @@
+---
+
+- name: Ensure wheel group is present
+  group:
+    name: wheel
+    state: present
+
+- name: Install the `sudo` package
+  package:
+    name: sudo
+    state: latest
+
+- name: Ensure wheel group has sudo privileges
+  lineinfile:
+    dest: /etc/sudoer
+    state: present
+    regexp: "^%wheel"
+    line: "%wheel ALL=(ALL:ALL) ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+ - name: Create the non-root user account
+  user:
+    name: "{{target_user}}"
+    password: "{{target_password}}"
+    shell: /bin/bash
+    update_password: on_create
+    groups: wheel
+    append: yes
+
+- name: place config
+- template:
+  src: bashrc.j2
+  dest: "/home/{{target_user}}/.bashrc"
+  owner: "{{taget_user}}"
+  group: "{{target_user}}"
+  mode: 0644
+

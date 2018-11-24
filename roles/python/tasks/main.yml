@@ -1,0 +1,7 @@
+
+- name: install python
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python

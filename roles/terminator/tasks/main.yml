@@ -1,0 +1,32 @@
+
+
+- name: Upgrading all packages (CentOS)
+  yum:
+    name: '*'
+    state: latest
+
+- name: install terminator
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - terminator
+
+- file:
+    path: "/home/{{target_user}}/.config"
+    state: directory
+    mode: 0644
+
+- file:
+    path: "/home/{{target_user}}/.config/terminator"
+    state: directory
+    mode: 0644
+
+- name: place config
+- template:
+  src: config.j2
+  dest: "/home/{{target_user}}/.config/terminator/confg"
+  owner: "{{taget_user}}"
+  group: "{{target_user}}"
+  mode: 0644
+

@@ -1,0 +1,29 @@
+---
+
+- name: create python dev env
+  user: root
+  hosts: all 
+  vars:
+    target_user: kyle1156
+
+  tasks:
+    - name: Upgrading all packages (CentOS)
+      yum:
+        name: '*'
+        state: latest
+
+    - name: install terminator
+      yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - htop
+      - screen
+
+  roles:
+    - user
+    - git
+    - terminator
+    - vim
+    - i3
+    - python
