@@ -25,4 +25,4 @@
     mode: 0755
 
 
-- shell: "sudo -u {{target_user}} vim +PluginInstall +qall"
+    #- shell: "sudo -u {{target_user}} vim +PluginInstall +qall"
