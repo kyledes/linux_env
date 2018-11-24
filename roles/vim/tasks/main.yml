@@ -6,18 +6,23 @@
   with_items:
     - vim
 
-- name: place config
 - template:
-  src: vimrc.j2
-  dest: "/home/{{target_user}}/.vimrc"
-  owner: "{{taget_user}}"
-  group: "{{target_user}}"
-  mode: 0644
+    src: vimrc.j2
+    dest: "/home/{{target_user}}/.vimrc"
+    owner: "{{target_user}}"
+    group: "{{target_user}}"
+    mode: 0644
 
-- name: install vundle
 - git:
-  repo: 'https://github.com/VundleVim/Vundle.vim.git '
-  dest: "/home/{{target_user}}/.vim/bundle/Vundle.vim"
+    repo: 'https://github.com/VundleVim/Vundle.vim.git'
+    dest: "/home/{{target_user}}/.vim/bundle/Vundle.vim"
 
-- name: install plugins
-- shell: "vim +PluginInstall +qall"
+- file:
+    path: "/home/{{target_user}}/.vim"
+    owner: "{{target_user}}"
+    group: "{{target_user}}"
+    recurse: yes
+    mode: 0755
+
+
+- shell: "sudo -u {{target_user}} vim +PluginInstall +qall"

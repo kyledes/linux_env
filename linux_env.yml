@@ -2,9 +2,7 @@
 
 - name: create python dev env
   user: root
-  hosts: all 
-  vars:
-    target_user: kyle1156
+  hosts: localhost
 
   tasks:
     - name: Upgrading all packages (CentOS)
@@ -12,13 +10,13 @@
         name: '*'
         state: latest
 
-    - name: install terminator
+    - name: install htop, screen
       yum:
-      name: "{{ item }}"
-      state: latest
-    with_items:
-      - htop
-      - screen
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - htop
+        - screen
 
   roles:
     - user
